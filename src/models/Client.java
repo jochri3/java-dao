@@ -1,33 +1,29 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Client {
-    private int id;
+public class Client extends ModelDeBase {
     private String nom;
     private String prenom;
     private String email;
     private char genre;
     private Date dateInscription;
     private Date dateNaissance;
+    private List<Telephone> telephoneList;
 
     public Client(int id, String nom, String prenom, String email, char genre, Date dateInscription, Date dateNaissance) {
-        this.id = id;
+        super(id);
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.genre = genre;
         this.dateInscription = dateInscription;
         this.dateNaissance = dateNaissance;
+        this.telephoneList=new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNom() {
         return nom;

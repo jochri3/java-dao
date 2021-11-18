@@ -1,22 +1,13 @@
 package models;
 
-public class Telephone {
-    private int id;
+public class Telephone extends ModelDeBase {
     private int idClient;
     private String numero;
 
     public Telephone(int id, int idClient, String numero) {
-        this.id = id;
+        super(id);
         this.idClient = idClient;
         this.numero = numero;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getIdClient() {
