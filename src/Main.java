@@ -9,10 +9,12 @@ public class Main {
 
         List<Client> clients=clientDAO.getAll();
 
+//        Itérer sur les objets
         for(Client c:clients){
             System.out.println(c);
         }
 
+        // 2ème méthode d'itération
         clients.forEach(element->{
             System.out.println(element);
         });
