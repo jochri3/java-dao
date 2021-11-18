@@ -72,4 +72,16 @@ public class Client extends ModelDeBase {
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", genre=" + genre +
+                ", dateInscription=" + dateInscription +
+                ", dateNaissance=" + dateNaissance +
+                '}';
+    }
 }
