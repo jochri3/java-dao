@@ -66,17 +66,48 @@ public class ClientDAO implements IClientDAO {
 
     @Override
     public void save(Client client) {
-
+        try{
+            Connection connexion=DatabaseConnection.getInstance();
+            PreparedStatement statement=connexion.prepareStatement("INSERT INTO clients(nom,prenom,email,genre) values(?,?,?,?)");
+            statement.setString(1,client.getNom());
+            statement.setString(2,client.getPrenom());
+            statement.setString(3,client.getEmail());
+            statement.setString(4,String.valueOf(client.getGenre()));
+            statement.executeUpdate();
+            System.out.println("Client crée avec succès");
+        }catch (SQLException err){
+            err.printStackTrace();
+        }
     }
 
     @Override
     public void update(Client client) {
-
+        try{
+            Connection connexion=DatabaseConnection.getInstance();
+            PreparedStatement statement=connexion.prepareStatement("UPDATE clients SET nom=?,prenom=?,email=?,genre=? WHERE id=?");
+            statement.setString(1,client.getNom());
+            statement.setString(2,client.getPrenom());
+            statement.setString(3,client.getEmail());
+            statement.setString(4,String.valueOf(client.getGenre()));
+            statement.setInt(5,client.getId());
+            statement.executeUpdate();
+            System.out.println("Client mis à jour avec succès");
+        }catch (SQLException err){
+            err.printStackTrace();
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        try{
+            Connection connexion=DatabaseConnection.getInstance();
+            PreparedStatement statement=connexion.prepareStatement("DELETE FROM clients WHERE id=?");
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            System.out.println("Client supprimé avec succès");
+        }catch (SQLException err){
+            err.printStackTrace();
+        }
     }
 
 //    private Client getRow(ResultSet res){

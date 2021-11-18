@@ -6,6 +6,7 @@ abstract public class ModelDeBase {
     public ModelDeBase(int id) {
         this.id = id;
     }
+    public ModelDeBase(){}
 
     public int getId() {
         return id;

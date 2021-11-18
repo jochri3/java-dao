@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// Implémenter la couche d'accès aux données pour le model Telephone
+//Afficher les numéros de téléphone d'un client
+//Mettre à jour le client:
+//      1 - Récupérer un client par son ID
+//      2 - Au traver des setters,mettre à jour un client
+//      3 - Envoyer les données mis à jour dans la base de données
+
+
 public class Client extends ModelDeBase {
     private String nom;
     private String prenom;
@@ -23,6 +31,22 @@ public class Client extends ModelDeBase {
         this.dateNaissance = dateNaissance;
         this.telephoneList=new ArrayList<>();
     }
+
+    public Client(String nom, String prenom, String email, char genre) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.genre = genre;
+    }
+
+    public Client(int id,String nom, String prenom, String email, char genre) {
+        super(id);
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.genre = genre;
+    }
+
 
 
     public String getNom() {
