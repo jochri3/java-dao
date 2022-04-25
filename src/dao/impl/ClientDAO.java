@@ -18,21 +18,7 @@ public class ClientDAO implements IClientDAO {
             Statement statement=connexion.createStatement();
             ResultSet resultSet=statement.executeQuery("SELECT * FROM clients");
             while (resultSet.next()){
-                int id=resultSet.getInt("id");
-                String nom=resultSet.getString("nom");
-                String prenom=resultSet.getString("prenom");
-                String email=resultSet.getString("email");
-                char genre=resultSet.getString("genre").charAt(0);
-                Date dateInscription=resultSet.getDate("dateInscription");
-                Date dateNaissance=resultSet.getDate("dateNaissance");
-
-//                v1
-//                Client client=new Client(id,nom,prenom,email,genre,dateInscription,dateNaissance);
-//                clients.add(client);
-
-//                v2
-                clients.add(new Client(id,nom,prenom,email,genre,dateInscription,dateNaissance));
-
+                clients.add(this.getRow(resultSet));
             }
         }catch (SQLException err){
             err.printStackTrace();
@@ -49,14 +35,7 @@ public class ClientDAO implements IClientDAO {
             statement.setInt(1,id);
             ResultSet resultSet=statement.executeQuery();
             while (resultSet.next()){
-                int clientId=resultSet.getInt("id");
-                String nom=resultSet.getString("nom");
-                String prenom=resultSet.getString("prenom");
-                String email=resultSet.getString("email");
-                char genre=resultSet.getString("genre").charAt(0);
-                Date dateInscription=resultSet.getDate("dateInscription");
-                Date dateNaissance=resultSet.getDate("dateNaissance");
-                client=new Client(clientId,nom,prenom,email,genre,dateInscription,dateNaissance);
+                client=this.getRow(resultSet);
             }
         }catch (SQLException err){
             err.printStackTrace();
@@ -69,10 +48,7 @@ public class ClientDAO implements IClientDAO {
         try{
             Connection connexion=DatabaseConnection.getInstance();
             PreparedStatement statement=connexion.prepareStatement("INSERT INTO clients(nom,prenom,email,genre) values(?,?,?,?)");
-            statement.setString(1,client.getNom());
-            statement.setString(2,client.getPrenom());
-            statement.setString(3,client.getEmail());
-            statement.setString(4,String.valueOf(client.getGenre()));
+            this.setAttributes(statement,client);
             statement.executeUpdate();
             System.out.println("Client crée avec succès");
         }catch (SQLException err){
@@ -85,10 +61,7 @@ public class ClientDAO implements IClientDAO {
         try{
             Connection connexion=DatabaseConnection.getInstance();
             PreparedStatement statement=connexion.prepareStatement("UPDATE clients SET nom=?,prenom=?,email=?,genre=? WHERE id=?");
-            statement.setString(1,client.getNom());
-            statement.setString(2,client.getPrenom());
-            statement.setString(3,client.getEmail());
-            statement.setString(4,String.valueOf(client.getGenre()));
+            this.setAttributes(statement,client);
             statement.setInt(5,client.getId());
             statement.executeUpdate();
             System.out.println("Client mis à jour avec succès");
@@ -110,14 +83,24 @@ public class ClientDAO implements IClientDAO {
         }
     }
 
-//    private Client getRow(ResultSet res){
-//        int clientId=res.getInt("id");
-//        String nom=res.getString("nom");
-//        String prenom=res.getString("prenom");
-//        String email=res.getString("email");
-//        char genre=res.getString("genre").charAt(0);
-//        Date dateInscription=res.getDate("dateInscription");
-//        Date dateNaissance=res.getDate("dateNaissance");
-//        return new Client(clientId,nom,prenom,email,genre,dateInscription,dateNaissance);
-//    }
+
+//    Getters des de results
+    private Client getRow(ResultSet res) throws SQLException {
+        int clientId=res.getInt("id");
+        String nom=res.getString("nom");
+        String prenom=res.getString("prenom");
+        String email=res.getString("email");
+        char genre=res.getString("genre").charAt(0);
+        Date dateInscription=res.getDate("dateInscription");
+        Date dateNaissance=res.getDate("dateNaissance");
+        return new Client(clientId,nom,prenom,email,genre,dateInscription,dateNaissance);
+    }
+
+//    Eviter duplication
+    private void setAttributes(PreparedStatement statement,Client client) throws SQLException {
+        statement.setString(1,client.getNom());
+        statement.setString(2,client.getPrenom());
+        statement.setString(3,client.getEmail());
+        statement.setString(4,String.valueOf(client.getGenre()));
+    }
 }

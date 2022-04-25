@@ -18,7 +18,7 @@ public class Main {
         Client client=clientDAO.getById(1);
         System.out.println("ID 1 : "+client);
 
-        //    Création
+//            Création
         Scanner clavier=new Scanner(System.in);
         System.out.print("Votre nom : ");
         String nom=clavier.nextLine();
